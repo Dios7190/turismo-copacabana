@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copacabana Mística | Portal Oficial de Turismo - Lago Titicaca</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Montserrat & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            titicaca: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              900: '#0c4a6e',
+              deep: '#061a2e',
+            },
+            gold: {
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+            }
+          },
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #061a2e; }
+    ::-webkit-scrollbar-thumb { background: #0284c7; border-radius: 4px; }
+    .hero-gradient {
+      background: linear-gradient(180deg, rgba(6, 26, 46, 0.55) 0%, rgba(6, 26, 46, 0.90) 100%);
+    }
+    .card-zoom:hover img {
+      transform: scale(1.07);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen selection:bg-gold-500 selection:text-slate-950">
+
+  <!-- ================= NOTIFICACIÓN TOAST (SIN ALERTAS NATIVAS) ================= -->
+  <div id="toast-container" class="fixed top-24 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ================= BARRA SUPERIOR DE SESIÓN ACTIVA (OCULTA PARA VISITANTES) ================= -->
+  <div id="session-topbar" class="hidden bg-slate-900 text-white text-xs py-2 px-4 border-b border-white/10 z-50">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-slate-300">Sesión iniciada como:</span>
+        <strong id="topbar-user-name" class="text-white font-bold"></strong>
+        <span id="topbar-role-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider"></span>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="toggleDashboardSection()" class="text-gold-400 hover:text-gold-300 font-semibold flex items-center gap-1">
+          <i class="fa-solid fa-sliders"></i> Ir al Panel de Gestión
+        </button>
+        <span class="text-slate-600">|</span>
+        <button onclick="logoutUser()" class="text-red-400 hover:text-red-300 font-semibold flex items-center gap-1">
+          <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= NAVBAR PRINCIPAL ================= -->
+  <nav class="sticky top-0 left-0 w-full z-40 bg-titicaca-deep/95 backdrop-blur-md border-b border-white/10 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Logo -->
+      <a href="#inicio" class="flex items-center gap-3 group shrink-0">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-gold-500 to-sky-500 flex items-center justify-center text-slate-950 shadow-lg shadow-gold-500/20 group-hover:scale-105 transition-transform">
+          <i class="fa-solid fa-sailboat text-xl"></i>
+        </div>
+        <div>
+          <span class="text-xl font-bold tracking-wider font-serif text-white block leading-none">COPACABANA</span>
+          <span class="text-[10px] tracking-widest text-gold-400 uppercase mt-1 block font-semibold">Lago Titicaca • Bolivia</span>
+        </div>
+      </a>
+
+      <!-- Enlaces Desktop -->
+      <div class="hidden lg:flex items-center gap-7 text-sm font-medium">
+        <a href="#inicio" class="hover:text-gold-400 transition-colors">Inicio</a>
+        <a href="#galeria-atractivos" class="hover:text-gold-400 transition-colors">Atractivos y Galería</a>
+        <a href="#guia-viajero" class="hover:text-gold-400 transition-colors">Guía de Viaje (Tiquina)</a>
+        <a href="#redes-oficiales" class="hover:text-gold-400 transition-colors">Redes Sociales</a>
+      </div>
+
+      <!-- Iconos Rápidos de Redes + Botón Login / Usuario -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Redes en Cabecera -->
+        <div class="hidden sm:flex items-center gap-1.5 bg-white/5 px-2.5 py-1.5 rounded-full border border-white/10">
+          <a data-social="whatsapp" href="#" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full flex items-center justify-center hover:bg-emerald-500 text-emerald-400 hover:text-white transition-all" title="WhatsApp Oficial">
+            <i class="fa-brands fa-whatsapp text-sm"></i>
+          </a>
+          <a data-social="tiktok" href="#" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full flex items-center justify-center hover:bg-white text-slate-200 hover:text-slate-950 transition-all" title="TikTok Oficial">
+            <i class="fa-brands fa-tiktok text-xs"></i>
+          </a>
+          <a data-social="instagram" href="#" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full flex items-center justify-center hover:bg-pink-600 text-pink-400 hover:text-white transition-all" title="Instagram Oficial">
+            <i class="fa-brands fa-instagram text-sm"></i>
+          </a>
+          <a data-social="facebook" href="#" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full flex items-center justify-center hover:bg-blue-600 text-blue-400 hover:text-white transition-all" title="Facebook Oficial">
+            <i class="fa-brands fa-facebook-f text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Botón Iniciar Sesión (Visible cuando NO hay sesión) -->
+        <button id="nav-login-btn" onclick="openLoginModal()" class="px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-gold-500 hover:bg-gold-400 text-slate-950 transition-all shadow-md hover:shadow-gold-500/30 flex items-center gap-2">
+          <i class="fa-solid fa-user-lock"></i>
+          <span>Iniciar Sesión</span>
+        </button>
+
+        <!-- Botones de Usuario Activo (Visibles al iniciar sesión) -->
+        <div id="nav-logged-controls" class="hidden flex items-center gap-2">
+          <button onclick="toggleDashboardSection()" class="px-3.5 py-2 rounded-full bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md transition">
+            <i class="fa-solid fa-gauge-high"></i>
+            <span class="hidden sm:inline">Panel</span>
+          </button>
+          <button onclick="logoutUser()" class="p-2 rounded-full bg-red-500/20 hover:bg-red-500 text-red-300 hover:text-white text-xs transition" title="Cerrar Sesión">
+            <i class="fa-solid fa-power-off"></i>
+          </button>
+        </div>
+
+        <!-- Botón Menú Móvil -->
+        <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl text-white hover:bg-white/10 text-lg">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menú Desplegable Móvil -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-titicaca-deep border-t border-white/10 px-6 py-5 space-y-3 text-sm">
+      <a href="#inicio" onclick="toggleMobileMenu()" class="block py-1.5 text-slate-200 hover:text-gold-400">Inicio</a>
+      <a href="#galeria-atractivos" onclick="toggleMobileMenu()" class="block py-1.5 text-slate-200 hover:text-gold-400">Atractivos y Galería</a>
+      <a href="#guia-viajero" onclick="toggleMobileMenu()" class="block py-1.5 text-slate-200 hover:text-gold-400">Guía de Viaje (Cruce Tiquina)</a>
+      <a href="#redes-oficiales" onclick="toggleMobileMenu()" class="block py-1.5 text-slate-200 hover:text-gold-400">Redes Sociales</a>
+    </div>
+  </nav>
+
+  <!-- ================= HERO SECTION ================= -->
+  <header id="inicio" class="relative min-h-[82vh] flex items-center justify-center overflow-hidden bg-titicaca-deep">
+    <img src="https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1920&q=80" 
+         alt="Vista panorámica de Copacabana y el Lago Titicaca" 
+         class="absolute inset-0 w-full h-full object-cover object-center scale-105"
+         onerror="this.src='https://placehold.co/1920x1080/061a2e/fbbf24?text=Lago+Titicaca+Copacabana'">
+    <div class="absolute inset-0 hero-gradient"></div>
+
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 text-center text-white py-16 z-10">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-gold-400 text-xs font-semibold uppercase tracking-widest mb-6">
+        <i class="fa-solid fa-compass"></i> Península de Copacabana • 3,841 m.s.n.m.
+      </div>
+      
+      <h1 class="text-4xl sm:text-6xl font-serif font-bold tracking-tight text-white mb-6 leading-tight">
+        Vive la Magia del <br class="hidden sm:inline">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-gold-400 to-amber-200">Lago Más Alto del Mundo</span>
+      </h1>
+      
+      <p class="text-base sm:text-lg text-slate-200 max-w-2xl mx-auto mb-8 font-light leading-relaxed">
+        Santuario de la Virgen de la Candelaria, arqueología incaica en la Isla del Sol, gastronomía lacustre y paisajes inolvidables a orillas del sagrado Titicaca.
+      </p>
+
+      <!-- Buscador Rápido en Vivo -->
+      <div class="max-w-xl mx-auto mb-8">
+        <div class="relative flex items-center bg-white/15 backdrop-blur-md border border-white/25 rounded-full p-1.5 shadow-2xl">
+          <i class="fa-solid fa-magnifying-glass text-gold-400 ml-4 mr-2"></i>
+          <input type="text" id="hero-search-input" oninput="handleSearchInput(this.value)" 
+                 placeholder="Buscar atractivo: Isla del Sol, Calvario, Trucha, Basílica..." 
+                 class="w-full bg-transparent text-white placeholder-slate-300 text-sm focus:outline-none px-2 py-2">
+          <a href="#galeria-atractivos" class="px-5 py-2.5 rounded-full bg-gold-500 hover:bg-gold-400 text-slate-950 font-bold text-xs uppercase tracking-wider transition shrink-0">
+            Explorar
+          </a>
+        </div>
+      </div>
+
+      <!-- Botones de Redes Directas en el Hero -->
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-4">
+        <a data-social="whatsapp" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full bg-emerald-600/90 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-2 backdrop-blur-sm transition hover:-translate-y-0.5 shadow-lg">
+          <i class="fa-brands fa-whatsapp text-base"></i> Consultar por WhatsApp
+        </a>
+        <a data-social="tiktok" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full bg-slate-900/90 hover:bg-black text-white text-xs font-semibold flex items-center gap-2 border border-white/20 backdrop-blur-sm transition hover:-translate-y-0.5 shadow-lg">
+          <i class="fa-brands fa-tiktok text-sm"></i> Videos en TikTok
+        </a>
+        <a data-social="instagram" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full bg-pink-600/90 hover:bg-pink-500 text-white text-xs font-semibold flex items-center gap-2 backdrop-blur-sm transition hover:-translate-y-0.5 shadow-lg">
+          <i class="fa-brands fa-instagram text-base"></i> Fotos en Instagram
+        </a>
+        <a data-social="facebook" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full bg-blue-600/90 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-2 backdrop-blur-sm transition hover:-translate-y-0.5 shadow-lg">
+          <i class="fa-brands fa-facebook text-base"></i> Comunidad Facebook
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= PANEL DE GESTIÓN INTERACTIVO (VISIBLE SOLO AL INICIAR SESIÓN) ================= -->
+  <section id="dashboard-section" class="hidden bg-slate-900 text-white border-b-4 border-gold-500 py-12 px-4 transition-all">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Encabezado del Dashboard -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-700 mb-8">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1 rounded-full bg-gold-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider" id="dash-role-tag">ROL</span>
+            <h2 class="text-2xl font-serif font-bold text-white">Panel de Administración Turística</h2>
+          </div>
+          <p class="text-xs text-slate-400 mt-1" id="dash-welcome-desc">Bienvenido al sistema de gestión de contenidos de Copacabana.</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="openAttractionModal()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-2 shadow-lg transition">
+            <i class="fa-solid fa-plus-circle"></i> Publicar Nueva Imagen / Atractivo
+          </button>
+          <button onclick="resetDefaultData()" class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 transition" title="Restaurar datos originales">
+            <i class="fa-solid fa-rotate-left mr-1"></i> Restaurar Demo
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid del Panel: Columna Redes Sociales + Columna Permisos de Usuarios -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Bloque 1: Configuración de Redirecciones de Redes Sociales (7 columnas) -->
+        <div class="lg:col-span-7 bg-slate-800/90 rounded-2xl p-6 border border-slate-700">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-base font-bold text-gold-400 flex items-center gap-2">
+              <i class="fa-solid fa-share-nodes"></i> Redirección de URLs de Redes Sociales
+            </h3>
+            <span id="social-lock-badge" class="text-[11px] px-2.5 py-0.5 rounded-full font-semibold"></span>
+          </div>
+          <p class="text-xs text-slate-300 mb-5">
+            Configura las direcciones web a las que irán los visitantes cuando hagan clic en los botones de WhatsApp, TikTok, Instagram o Facebook en toda la página.
+          </p>
+
+          <form id="social-config-form" onsubmit="saveSocialConfig(event)" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- WhatsApp URL -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5">
+                  <i class="fa-brands fa-whatsapp text-emerald-400 mr-1"></i> URL de WhatsApp:
+                </label>
+                <div class="flex gap-1.5">
+                  <input type="url" id="cfg-whatsapp" required class=" social-input w-full bg-slate-900 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white focus:border-gold-400 focus:outline-none">
+                  <a data-social="whatsapp" href="#" target="_blank" class="px-3 py-2 bg-slate-700 hover:bg-emerald-600 rounded-xl text-xs flex items-center justify-center transition" title="Probar enlace">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- TikTok URL -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5">
+                  <i class="fa-brands fa-tiktok text-white mr-1"></i> URL de TikTok:
+                </label>
+                <div class="flex gap-1.5">
+                  <input type="url" id="cfg-tiktok" required class="social-input w-full bg-slate-900 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white focus:border-gold-400 focus:outline-none">
+                  <a data-social="tiktok" href="#" target="_blank" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 rounded-xl text-xs flex items-center justify-center transition" title="Probar enlace">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Instagram URL -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5">
+                  <i class="fa-brands fa-instagram text-pink-400 mr-1"></i> URL de Instagram:
+                </label>
+                <div class="flex gap-1.5">
+                  <input type="url" id="cfg-instagram" required class="social-input w-full bg-slate-900 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white focus:border-gold-400 focus:outline-none">
+                  <a data-social="instagram" href="#" target="_blank" class="px-3 py-2 bg-slate-700 hover:bg-pink-600 rounded-xl text-xs flex items-center justify-center transition" title="Probar enlace">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Facebook URL -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5">
+                  <i class="fa-brands fa-facebook text-blue-400 mr-1"></i> URL de Facebook:
+                </label>
+                <div class="flex gap-1.5">
+                  <input type="url" id="cfg-facebook" required class="social-input w-full bg-slate-900 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white focus:border-gold-400 focus:outline-none">
+                  <a data-social="facebook" href="#" target="_blank" class="px-3 py-2 bg-slate-700 hover:bg-blue-600 rounded-xl text-xs flex items-center justify-center transition" title="Probar enlace">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 flex items-center justify-between">
+              <p id="social-lock-msg" class="text-[11px] text-amber-400 hidden">
+                <i class="fa-solid fa-lock mr-1"></i> Como Usuario Secundario, solo tienes lectura en esta sección. El Administrador modifica las URLs.
+              </p>
+              <button type="submit" id="btn-save-socials" class="ml-auto px-5 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-slate-950 font-bold text-xs transition shadow-md">
+                <i class="fa-solid fa-floppy-disk mr-1"></i> Guardar URLs de Redes
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Bloque 2: Jerarquía de Usuarios Registrados (5 columnas) -->
+        <div class="lg:col-span-5 bg-slate-800/90 rounded-2xl p-6 border border-slate-700 flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-sky-400 flex items-center gap-2 mb-3">
+              <i class="fa-solid fa-users-gear"></i> Estructura de Usuarios del Sistema
+            </h3>
+            <p class="text-xs text-slate-300 mb-4">
+              El portal cuenta con 1 Administrador Principal y 2 Usuarios Secundarios con permisos diferenciados:
+            </p>
+
+            <div class="space-y-2.5 text-xs">
+              <div class="p-3 rounded-xl bg-slate-900/90 border border-amber-500/30 flex items-center justify-between">
+                <div>
+                  <span class="font-bold text-amber-400 block">1. Administrador Maestro (Víctor)</span>
+                  <span class="text-[11px] text-slate-400">Usuario: <code class="text-slate-200">admin</code> • Control total de fotos y URLs</span>
+                </div>
+                <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-[10px]">Total</span>
+              </div>
+
+              <div class="p-3 rounded-xl bg-slate-900/90 border border-sky-500/30 flex items-center justify-between">
+                <div>
+                  <span class="font-bold text-sky-400 block">2. Usuario Secundario 1 (Soraida)</span>
+                  <span class="text-[11px] text-slate-400">Usuario: <code class="text-slate-200">operador1</code> • Subir y editar atractivos</span>
+                </div>
+                <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold text-[10px]">Editor 1</span>
+              </div>
+
+              <div class="p-3 rounded-xl bg-slate-900/90 border border-teal-500/30 flex items-center justify-between">
+                <div>
+                  <span class="font-bold text-teal-400 block">3. Usuario Secundario 2 (Carlos)</span>
+                  <span class="text-[11px] text-slate-400">Usuario: <code class="text-slate-200">operador2</code> • Subir y editar atractivos</span>
+                </div>
+                <span class="px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 font-bold text-[10px]">Editor 2</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-5 pt-4 border-t border-slate-700 flex items-center justify-between text-xs text-slate-400">
+            <span>Total de imágenes activas: <strong id="stat-total-photos" class="text-white">0</strong></span>
+            <button onclick="openLoginModal()" class="text-gold-400 hover:underline font-semibold">
+              <i class="fa-solid fa-user-pen mr-1"></i> Cambiar de cuenta
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECCIÓN GALERÍA Y ATRACTIVOS TURÍSTICOS ================= -->
+  <section id="galeria-atractivos" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    
+    <!-- Cabecera y Filtros -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+      <div>
+        <span class="text-xs font-bold tracking-widest text-sky-700 uppercase bg-sky-100 px-3 py-1 rounded-full">Catálogo Fotográfico Interactivo</span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-titicaca-deep mt-2">Maravillas de Copacabana</h2>
+        <p class="text-slate-600 text-sm mt-1">Explora las imágenes del municipio; si eres parte del equipo, inicia sesión para agregar o modificar atractivos.</p>
+      </div>
+
+      <!-- Botones de Categoría -->
+      <div class="flex flex-wrap gap-2" id="category-filters">
+        <button onclick="setCategoryFilter('todos')" data-cat="todos" class="cat-btn px-4 py-2 rounded-full text-xs font-bold bg-titicaca-deep text-white shadow-sm transition">
+          Todos
+        </button>
+        <button onclick="setCategoryFilter('Atractivos')" data-cat="Atractivos" class="cat-btn px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-700 hover:bg-slate-200 border border-slate-200 transition">
+          Lugares y Miradores
+        </button>
+        <button onclick="setCategoryFilter('Islas y Naturaleza')" data-cat="Islas y Naturaleza" class="cat-btn px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-700 hover:bg-slate-200 border border-slate-200 transition">
+          Islas y Lago
+        </button>
+        <button onclick="setCategoryFilter('Cultura')" data-cat="Cultura" class="cat-btn px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-700 hover:bg-slate-200 border border-slate-200 transition">
+          Fe y Arqueología
+        </button>
+        <button onclick="setCategoryFilter('Gastronomía')" data-cat="Gastronomía" class="cat-btn px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-700 hover:bg-slate-200 border border-slate-200 transition">
+          Gastronomía
+        </button>
+      </div>
+    </div>
+
+    <!-- Barra de Acción Rápida para Usuarios Logueados -->
+    <div id="gallery-editor-bar" class="hidden mb-8 p-4 rounded-2xl bg-sky-50 border border-sky-200 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3 text-xs text-sky-950">
+        <i class="fa-solid fa-wand-magic-sparkles text-sky-600 text-lg"></i>
+        <span>Modo Edición Activo: Puedes <strong>añadir nuevas fotos</strong> o pulsar el botón <strong>"Editar"</strong> en cualquier tarjeta de Copacabana.</span>
+      </div>
+      <button onclick="openAttractionModal()" class="px-4 py-2 rounded-xl bg-titicaca-deep hover:bg-sky-900 text-white text-xs font-bold flex items-center gap-2 shadow transition">
+        <i class="fa-solid fa-camera"></i> + Subir Imagen de Copacabana
+      </button>
+    </div>
+
+    <!-- Grid Dinámico de Tarjetas -->
+    <div id="attractions-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Renderizado por JavaScript -->
+    </div>
+
+  </section>
+
+  <!-- ================= GUÍA PRÁCTICA DEL VIAJERO (TIQUINA Y ALTURA) ================= -->
+  <section id="guia-viajero" class="py-20 bg-white border-y border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-xs font-bold tracking-widest text-amber-700 uppercase bg-amber-100 px-3 py-1 rounded-full">Datos Útiles para tu Viaje</span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-titicaca-deep mt-2">¿Cómo Llegar a Copacabana?</h2>
+        <p class="text-slate-600 text-sm mt-2">Toda la información logística para viajar desde La Paz o El Alto hacia la península.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Paso 1 -->
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200/80 relative overflow-hidden">
+          <div class="w-12 h-12 rounded-2xl bg-sky-600 text-white flex items-center justify-center font-bold text-xl mb-4 shadow-md">
+            <i class="fa-solid fa-bus"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">1. Salida desde La Paz / El Alto</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Buses turísticos y minibuses salen diariamente desde la zona del Cementerio General (La Paz) y desde la Terminal Interprovincial de El Alto (Río Seco). El trayecto toma entre 3.5 y 4 horas bordeando la Cordillera Real.
+          </p>
+        </div>
+
+        <!-- Paso 2 -->
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200/80 relative overflow-hidden">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center font-bold text-xl mb-4 shadow-md">
+            <i class="fa-solid fa-ferry"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">2. Cruce del Estrecho de Tiquina</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            A mitad de camino se llega a San Pedro y San Pablo de Tiquina (800 m de ancho). Los pasajeros descienden del vehículo para cruzar en lanchas a motor con chaleco salvavidas, mientras los autobuses cruzan en pontones de madera.
+          </p>
+        </div>
+
+        <!-- Paso 3 -->
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200/80 relative overflow-hidden">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-bold text-xl mb-4 shadow-md">
+            <i class="fa-solid fa-mountain-sun"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">3. Clima, Lanchas y Altura</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Copacabana se ubica a 3,841 m.s.n.m. Durante el día el sol altiplánico es radiante (traer bloqueador solar, gorra y gafas), pero al caer la tarde la temperatura desciende rápidamente. Del puerto salen lanchas hacia la Isla del Sol a las 08:30 y 13:30.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECCIÓN CENTRAL DE REDES SOCIALES ================= -->
+  <section id="redes-oficiales" class="py-20 bg-titicaca-deep text-white relative overflow-hidden">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
+      <span class="text-xs font-bold tracking-widest text-gold-400 uppercase bg-white/10 px-3 py-1 rounded-full">Conecta con Nosotros</span>
+      <h2 class="text-3xl sm:text-4xl font-serif font-bold mt-3 mb-4">Nuestras Redes Sociales Oficiales</h2>
+      <p class="text-slate-300 text-sm max-w-xl mx-auto mb-10">
+        Haz clic en cualquiera de nuestras plataformas para recibir atención personalizada por WhatsApp, ver videos de atractivos en TikTok o seguir nuestras galerías en Instagram y Facebook.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <!-- Tarjeta WhatsApp -->
+        <a data-social="whatsapp" href="#" target="_blank" rel="noopener noreferrer" 
+           class="group bg-white/5 hover:bg-emerald-600 border border-white/10 p-6 rounded-2xl transition-all duration-300 flex flex-col items-center hover:-translate-y-1.5 shadow-xl">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 group-hover:bg-white/20 flex items-center justify-center text-emerald-400 group-hover:text-white text-3xl mb-3 transition">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+          <h3 class="font-bold text-base">WhatsApp</h3>
+          <p class="text-xs text-slate-400 group-hover:text-emerald-100 mt-1">Reservas y consultas en línea</p>
+          <span class="mt-4 text-[11px] font-bold uppercase tracking-wider text-gold-400 group-hover:text-white flex items-center gap-1">
+            Abrir Chat <i class="fa-solid fa-arrow-right"></i>
+          </span>
+        </a>
+
+        <!-- Tarjeta TikTok -->
+        <a data-social="tiktok" href="#" target="_blank" rel="noopener noreferrer" 
+           class="group bg-white/5 hover:bg-black border border-white/10 p-6 rounded-2xl transition-all duration-300 flex flex-col items-center hover:-translate-y-1.5 shadow-xl">
+          <div class="w-14 h-14 rounded-2xl bg-white/10 group-hover:bg-white/20 flex items-center justify-center text-white text-3xl mb-3 transition">
+            <i class="fa-brands fa-tiktok"></i>
+          </div>
+          <h3 class="font-bold text-base">TikTok</h3>
+          <p class="text-xs text-slate-400 group-hover:text-slate-300 mt-1">Videos virales del Lago Titicaca</p>
+          <span class="mt-4 text-[11px] font-bold uppercase tracking-wider text-gold-400 group-hover:text-white flex items-center gap-1">
+            Ver Perfil <i class="fa-solid fa-arrow-right"></i>
+          </span>
+        </a>
+
+        <!-- Tarjeta Instagram -->
+        <a data-social="instagram" href="#" target="_blank" rel="noopener noreferrer" 
+           class="group bg-white/5 hover:bg-gradient-to-tr hover:from-purple-600 hover:to-pink-600 border border-white/10 p-6 rounded-2xl transition-all duration-300 flex flex-col items-center hover:-translate-y-1.5 shadow-xl">
+          <div class="w-14 h-14 rounded-2xl bg-pink-500/20 group-hover:bg-white/20 flex items-center justify-center text-pink-400 group-hover:text-white text-3xl mb-3 transition">
+            <i class="fa-brands fa-instagram"></i>
+          </div>
+          <h3 class="font-bold text-base">Instagram</h3>
+          <p class="text-xs text-slate-400 group-hover:text-pink-100 mt-1">Postales y reels de viajeros</p>
+          <span class="mt-4 text-[11px] font-bold uppercase tracking-wider text-gold-400 group-hover:text-white flex items-center gap-1">
+            Seguir Cuenta <i class="fa-solid fa-arrow-right"></i>
+          </span>
+        </a>
+
+        <!-- Tarjeta Facebook -->
+        <a data-social="facebook" href="#" target="_blank" rel="noopener noreferrer" 
+           class="group bg-white/5 hover:bg-blue-600 border border-white/10 p-6 rounded-2xl transition-all duration-300 flex flex-col items-center hover:-translate-y-1.5 shadow-xl">
+          <div class="w-14 h-14 rounded-2xl bg-blue-500/20 group-hover:bg-white/20 flex items-center justify-center text-blue-400 group-hover:text-white text-3xl mb-3 transition">
+            <i class="fa-brands fa-facebook-f"></i>
+          </div>
+          <h3 class="font-bold text-base">Facebook</h3>
+          <p class="text-xs text-slate-400 group-hover:text-blue-100 mt-1">Eventos, festividades y noticias</p>
+          <span class="mt-4 text-[11px] font-bold uppercase tracking-wider text-gold-400 group-hover:text-white flex items-center gap-1">
+            Visitar Página <i class="fa-solid fa-arrow-right"></i>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-slate-950 text-slate-400 py-8 text-xs border-t border-white/10 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-water text-gold-400"></i>
+        <span>Portal Oficial de Promoción Turística de Copacabana • La Paz, Bolivia</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <button onclick="openLoginModal()" class="hover:text-gold-400 transition">Acceso Personal (Admin / Operadores)</button>
+        <span>•</span>
+        <span>© 2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= BOTONES FLOTANTES LATERALES DE REDES ================= -->
+  <div class="fixed bottom-5 right-5 z-30 flex flex-col gap-2.5">
+    <a data-social="whatsapp" href="#" target="_blank" rel="noopener noreferrer" 
+       class="w-12 h-12 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform" title="Chatear por WhatsApp">
+      <i class="fa-brands fa-whatsapp text-2xl"></i>
+    </a>
+    <a data-social="tiktok" href="#" target="_blank" rel="noopener noreferrer" 
+       class="w-12 h-12 rounded-full bg-slate-900 hover:bg-black text-white border border-white/20 flex items-center justify-center shadow-lg hover:scale-110 transition-transform" title="Ver TikTok">
+      <i class="fa-brands fa-tiktok text-lg"></i>
+    </a>
+  </div>
+
+  <!-- ================= MODAL 1: INICIO DE SESIÓN REAL (ADMIN Y 2 USUARIOS SECUNDARIOS) ================= -->
+  <div id="login-modal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100">
+      
+      <button onclick="closeLoginModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 bg-titicaca-deep text-gold-400 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-md">
+          <i class="fa-solid fa-user-lock"></i>
+        </div>
+        <h3 class="text-xl font-bold font-serif text-slate-900">Iniciar Sesión en el Sistema</h3>
+        <p class="text-xs text-slate-500 mt-1">Ingresa con tu cuenta de Administrador o Usuario Secundario</p>
+      </div>
+
+      <!-- Formulario de Login con Usuario y Contraseña -->
+      <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Nombre de Usuario</label>
+          <div class="relative">
+            <i class="fa-solid fa-user text-slate-400 absolute left-3.5 top-3 text-xs"></i>
+            <input type="text" id="login-username" required placeholder="Ej: admin, operador1, operador2" 
+                   class="w-full pl-9 pr-3 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-sky-500 focus:outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Contraseña</label>
+          <div class="relative">
+            <i class="fa-solid fa-key text-slate-400 absolute left-3.5 top-3 text-xs"></i>
+            <input type="password" id="login-password" required placeholder="Ingresa tu contraseña" 
+                   class="w-full pl-9 pr-3 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-sky-500 focus:outline-none">
+          </div>
+        </div>
+
+        <p id="login-error-msg" class="text-xs text-red-600 font-semibold hidden bg-red-50 p-2.5 rounded-lg border border-red-200">
+          <i class="fa-solid fa-circle-exclamation mr-1"></i> Usuario o contraseña incorrectos.
+        </p>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-titicaca-deep hover:bg-sky-900 text-white font-bold text-xs uppercase tracking-wider shadow-lg transition">
+          Ingresar al Panel
+        </button>
+      </form>
+
+      <!-- Botones de Autocompletado Rápido para Pruebas -->
+      <div class="mt-6 pt-5 border-t border-slate-200">
+        <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider text-center mb-3">
+          Cuentas configuradas (Clic para autocompletar):
+        </p>
+        <div class="grid grid-cols-1 gap-2 text-xs">
+          <button type="button" onclick="fillCredentials('admin', 'admin123')" class="p-2.5 rounded-xl border border-amber-300 bg-amber-50 hover:bg-amber-100 text-left flex items-center justify-between transition">
+            <div>
+              <span class="font-bold text-slate-900 block"><i class="fa-solid fa-crown text-amber-600 mr-1"></i> Administrador (Víctor)</span>
+              <span class="text-[10px] text-slate-600">user: <b>admin</b> | pass: <b>admin123</b></span>
+            </div>
+            <span class="text-[10px] font-bold bg-amber-500 text-slate-950 px-2 py-0.5 rounded">Control Total</span>
+          </button>
+
+          <button type="button" onclick="fillCredentials('operador1', 'copa2026')" class="p-2.5 rounded-xl border border-sky-200 bg-sky-50 hover:bg-sky-100 text-left flex items-center justify-between transition">
+            <div>
+              <span class="font-bold text-slate-900 block"><i class="fa-solid fa-user-check text-sky-600 mr-1"></i> Usuario Secundario 1 (Soraida)</span>
+              <span class="text-[10px] text-slate-600">user: <b>operador1</b> | pass: <b>copa2026</b></span>
+            </div>
+            <span class="text-[10px] font-bold bg-sky-600 text-white px-2 py-0.5 rounded">Fotos / Galería</span>
+          </button>
+
+          <button type="button" onclick="fillCredentials('operador2', 'titicaca2026')" class="p-2.5 rounded-xl border border-teal-200 bg-teal-50 hover:bg-teal-100 text-left flex items-center justify-between transition">
+            <div>
+              <span class="font-bold text-slate-900 block"><i class="fa-solid fa-user-check text-teal-600 mr-1"></i> Usuario Secundario 2 (Carlos)</span>
+              <span class="text-[10px] text-slate-600">user: <b>operador2</b> | pass: <b>titicaca2026</b></span>
+            </div>
+            <span class="text-[10px] font-bold bg-teal-600 text-white px-2 py-0.5 rounded">Fotos / Galería</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= MODAL 2: CREAR O EDITAR IMAGEN / ATRACTIVO ================= -->
+  <div id="attraction-modal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative">
+      
+      <button onclick="closeAttractionModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <h3 id="modal-form-title" class="text-xl font-bold font-serif text-slate-900 mb-1">Subir Imagen de Copacabana</h3>
+      <p class="text-xs text-slate-500 mb-5">Completa los datos para mostrar o actualizar este atractivo en la galería pública.</p>
+
+      <form id="attraction-form" onsubmit="saveAttractionForm(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="edit-item-id">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Título del Atractivo</label>
+            <input type="text" id="item-title" required placeholder="Ej: Bahía de Copacabana" class="w-full px-3 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-sky-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Categoría</label>
+            <select id="item-category" class="w-full px-3 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-sky-500 focus:outline-none">
+              <option value="Atractivos">Lugares y Miradores</option>
+              <option value="Islas y Naturaleza">Islas y Lago</option>
+              <option value="Cultura">Fe y Arqueología</option>
+              <option value="Gastronomía">Gastronomía</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">URL de la Fotografía</label>
+          <div class="flex gap-2">
+            <input type="url" id="item-url" required placeholder="https://images.unsplash.com/..." class="w-full px-3 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-sky-500 focus:outline-none">
+            <button type="button" onclick="insertRandomSamplePhoto()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl shrink-0 border border-slate-300">
+              Foto Demo
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Ubicación o Tip para el Turista</label>
+          <input type="text" id="item-location" required placeholder="Ej: A 10 minutos de la Plaza 2 de Febrero" class="w-full px-3 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-sky-500 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Descripción</label>
+          <textarea id="item-desc" rows="3" required placeholder="Describe la historia o experiencia del lugar..." class="w-full px-3 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-sky-500 focus:outline-none"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-3 border-t border-slate-100">
+          <button type="button" onclick="closeAttractionModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">
+            Cancelar
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl bg-titicaca-deep hover:bg-sky-900 text-white font-bold shadow-md">
+            Guardar en la Galería
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL 3: VISOR DETALLADO DE IMAGEN (LIGHTBOX) ================= -->
+  <div id="detail-modal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md hidden flex items-center justify-center p-4" onclick="closeDetailModal()">
+    <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative" onclick="event.stopPropagation()">
+      <button onclick="closeDetailModal()" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-slate-900/70 text-white hover:bg-slate-900 flex items-center justify-center">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <img id="detail-img" src="" alt="" class="w-full h-72 sm:h-96 object-cover">
+      <div class="p-6 sm:p-8">
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <span id="detail-cat" class="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-sky-100 text-sky-800"></span>
+          <span id="detail-author" class="text-xs text-slate-400"></span>
+        </div>
+        <h3 id="detail-title" class="text-2xl font-serif font-bold text-slate-900 mb-2"></h3>
+        <p id="detail-desc" class="text-sm text-slate-600 leading-relaxed mb-4"></p>
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 flex items-center gap-2">
+          <i class="fa-solid fa-location-dot text-red-500 text-sm"></i>
+          <span id="detail-location" class="font-medium"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= LÓGICA DE LA APLICACIÓN ================= -->
+  <script>
+    /* 1. CUENTAS DE USUARIO (1 ADMINISTRADOR + 2 SECUNDARIOS) */
+    const USERS_DB = {
+      admin: {
+        username: 'admin',
+        pass: 'admin123',
+        name: 'Víctor (Administrador)',
+        role: 'admin',
+        roleLabel: 'Administrador Maestro',
+        badgeClass: 'bg-amber-500 text-slate-950',
+        canEditSocials: true,
+        canDeleteAny: true
+      },
+      operador1: {
+        username: 'operador1',
+        pass: 'copa2026',
+        name: 'Soraida (Operadora 1)',
+        role: 'secondary',
+        roleLabel: 'Usuario Secundario 1',
+        badgeClass: 'bg-sky-500 text-white',
+        canEditSocials: false,
+        canDeleteAny: false
+      },
+      operador2: {
+        username: 'operador2',
+        pass: 'titicaca2026',
+        name: 'Carlos (Operador 2)',
+        role: 'secondary',
+        roleLabel: 'Usuario Secundario 2',
+        badgeClass: 'bg-teal-500 text-white',
+        canEditSocials: false,
+        canDeleteAny: false
+      }
+    };
+
+    /* 2. DATOS POR DEFECTO DE REDES Y ATRACTIVOS DE COPACABANA */
+    const DEFAULT_SOCIALS = {
+      whatsapp: 'https://wa.me/59170000000?text=Hola,%20quisiera%20informacion%20turistica%20de%20Copacabana',
+      tiktok: 'https://www.tiktok.com/@turismobolivia',
+      instagram: 'https://www.instagram.com/explore/tags/copacabanabolivia/',
+      facebook: 'https://www.facebook.com/BoliviaTuristicaOficial/'
+    };
+
+    const DEFAULT_ATTRACTIONS = [
+      {
+        id: 101,
+        title: 'Basílica de Nuestra Señora de Copacabana',
+        category: 'Cultura',
+        url: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80',
+        location: 'Plaza Principal 2 de Febrero • Entrada libre',
+        desc: 'Majestuoso templo de estilo renacentista y morisco edificado en el siglo XVII. Resguarda la imagen tallada en maguey de la Virgen de la Candelaria y es famoso por sus tradicionales bendiciones de vehículos.',
+        author: 'Víctor (Administrador)'
+      },
+      {
+        id: 102,
+        title: 'Mirador del Cerro El Calvario',
+        category: 'Atractivos',
+        url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80',
+        location: 'Ascenso de 35 minutos desde el centro urbano',
+        desc: 'Recorrido espiritual con las 14 estaciones de la cruz y yatiris andinos. En la cima se contempla el atardecer más sobrecogedor sobre toda la península y la inmensidad del Lago Titicaca.',
+        author: 'Víctor (Administrador)'
+      },
+      {
+        id: 103,
+        title: 'Isla del Sol - Escalinata del Inca y Yumani',
+        category: 'Islas y Naturaleza',
+        url: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=900&q=80',
+        location: 'A 1 hora y media en lancha desde el puerto de Copacabana',
+        desc: 'La isla sagrada donde, según la leyenda andina, Viracocha dio origen a Manco Cápac y Mama Ocllo. Cuenta con terrazas precolombinas, la Fuente de las Tres Aguas y el palacio de Pilkokaina.',
+        author: 'Soraida (Operadora 1)'
+      },
+      {
+        id: 104,
+        title: 'Observatorio Preincaico Horca del Inca',
+        category: 'Cultura',
+        url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80',
+        location: 'Cerro Kesanani, a 500 metros de la ciudad',
+        desc: 'Conocido originalmente como Pachataka, es un monumento megalítico astronómico de la cultura Chiripa utilizado para registrar con exactitud los solsticios y los ciclos agrícolas.',
+        author: 'Carlos (Operador 2)'
+      },
+      {
+        id: 105,
+        title: 'Trucha Rosada a la Mantequilla y Limón',
+        category: 'Gastronomía',
+        url: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=900&q=80',
+        location: 'Kioscos y restaurantes de la Playa de Copacabana',
+        desc: 'El plato emblema del lago: trucha fresca preparada al ajillo, a la diabla o a la plancha, servida con papas nativas doradas, choclo tierno, arroz y llajua casera frente al muelle.',
+        author: 'Soraida (Operadora 1)'
+      },
+      {
+        id: 106,
+        title: 'Bahía de Copacabana y Paseo en Botes',
+        category: 'Islas y Naturaleza',
+        url: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=900&q=80',
+        location: 'Costanera y Muelle Turístico',
+        desc: 'Aguas azules rodeadas de botes a pedal, catamaranes y embarcaciones que conectan con playas tranquilas y comunidades originarias como Sampaya y Yampupata.',
+        author: 'Carlos (Operador 2)'
+      }
+    ];
+
+    /* 3. ESTADO EN MEMORIA Y LOCALSTORAGE */
+    let activeUser = null;
+    let socialUrls = { ...DEFAULT_SOCIALS };
+    let attractionsList = [...DEFAULT_ATTRACTIONS];
+    let currentCategory = 'todos';
+    let currentSearchQuery = '';
+
+    /* 4. INICIALIZACIÓN AL CARGAR LA PÁGINA */
+    window.addEventListener('DOMContentLoaded', () => {
+      loadPersistedData();
+      applySocialLinksToDOM();
+      renderAuthHeaderState();
+      renderAttractionsGrid();
+    });
+
+    function loadPersistedData() {
+      try {
+        const storedSocials = localStorage.getItem('copa_v2_socials');
+        if (storedSocials) socialUrls = JSON.parse(storedSocials);
+
+        const storedAttractions = localStorage.getItem('copa_v2_attractions');
+        if (storedAttractions) attractionsList = JSON.parse(storedAttractions);
+
+        const storedSession = localStorage.getItem('copa_v2_active_user');
+        if (storedSession && USERS_DB[storedSession]) {
+          activeUser = USERS_DB[storedSession];
+        }
+      } catch (err) {
+        console.warn('Usando almacenamiento en memoria temporal.');
+      }
+    }
+
+    /* 5. SISTEMA DE NOTIFICACIONES TOAST */
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const colors = type === 'success' 
+        ? 'bg-emerald-600 text-white border-emerald-400' 
+        : (type === 'warning' ? 'bg-amber-500 text-slate-950 border-amber-300' : 'bg-red-600 text-white border-red-400');
+
+      toast.className = `${colors} px-4 py-3 rounded-2xl shadow-2xl border text-xs font-bold flex items-center gap-2.5 pointer-events-auto transition-all duration-300`;
+      toast.innerHTML = `<i class="fa-solid fa-circle-check text-sm"></i> <span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-x-5');
+        setTimeout(() => toast.remove(), 300);
+      }, 3400);
+    }
+
+    /* 6. AUTENTICACIÓN: LOGIN, LOGOUT Y PERMISOS */
+    function openLoginModal() {
+      document.getElementById('login-error-msg').classList.add('hidden');
+      document.getElementById('login-modal').classList.remove('hidden');
+    }
+
+    function closeLoginModal() {
+      document.getElementById('login-modal').classList.add('hidden');
+    }
+
+    function fillCredentials(user, pass) {
+      document.getElementById('login-username').value = user;
+      document.getElementById('login-password').value = pass;
+      document.getElementById('login-error-msg').classList.add('hidden');
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const u = document.getElementById('login-username').value.trim().toLowerCase();
+      const p = document.getElementById('login-password').value.trim();
+
+      if (USERS_DB[u] && USERS_DB[u].pass === p) {
+        activeUser = USERS_DB[u];
+        try { localStorage.setItem('copa_v2_active_user', u); } catch (err) {}
+        closeLoginModal();
+        renderAuthHeaderState();
+        renderAttractionsGrid();
+        document.getElementById('dashboard-section').classList.remove('hidden');
+        document.getElementById('dashboard-section').scrollIntoView({ behavior: 'smooth' });
+        showToast(`¡Bienvenido ${activeUser.name}! Sesión activa.`);
+      } else {
+        document.getElementById('login-error-msg').classList.remove('hidden');
+      }
+    }
+
+    function logoutUser() {
+      activeUser = null;
+      try { localStorage.removeItem('copa_v2_active_user'); } catch (err) {}
+      document.getElementById('dashboard-section').classList.add('hidden');
+      renderAuthHeaderState();
+      renderAttractionsGrid();
+      showToast('Has cerrado sesión correctamente. Vista pública activada.', 'warning');
+    }
+
+    function toggleDashboardSection() {
+      const dash = document.getElementById('dashboard-section');
+      dash.classList.toggle('hidden');
+      if (!dash.classList.contains('hidden')) {
+        dash.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function renderAuthHeaderState() {
+      const topbar = document.getElementById('session-topbar');
+      const loginBtn = document.getElementById('nav-login-btn');
+      const loggedControls = document.getElementById('nav-logged-controls');
+      const editorBar = document.getElementById('gallery-editor-bar');
+
+      document.getElementById('stat-total-photos').textContent = attractionsList.length;
+
+      if (!activeUser) {
+        topbar.classList.add('hidden');
+        loginBtn.classList.remove('hidden');
+        loggedControls.classList.add('hidden');
+        editorBar.classList.add('hidden');
+        return;
+      }
+
+      // Usuario autenticado
+      topbar.classList.remove('hidden');
+      loginBtn.classList.add('hidden');
+      loggedControls.classList.remove('hidden');
+      editorBar.classList.remove('hidden');
+
+      document.getElementById('topbar-user-name').textContent = activeUser.name;
+      const badge = document.getElementById('topbar-role-badge');
+      badge.textContent = activeUser.roleLabel;
+      badge.className = `px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${activeUser.badgeClass}`;
+
+      document.getElementById('dash-role-tag').textContent = activeUser.roleLabel;
+      document.getElementById('dash-welcome-desc').textContent = activeUser.canEditSocials
+        ? 'Tienes permisos de Administrador Maestro: puedes editar todas las fotos y cambiar las URLs de WhatsApp, TikTok, Instagram y Facebook.'
+        : 'Tienes permisos de Usuario Secundario: puedes agregar y editar imágenes turísticas de Copacabana.';
+
+      // Bloquear o habilitar edición de URLs de Redes Sociales según rol
+      const inputs = document.querySelectorAll('.social-input');
+      const saveBtn = document.getElementById('btn-save-socials');
+      const lockMsg = document.getElementById('social-lock-msg');
+      const lockBadge = document.getElementById('social-lock-badge');
+
+      if (activeUser.canEditSocials) {
+        inputs.forEach(i => { i.disabled = false; i.classList.remove('opacity-60', 'cursor-not-allowed'); });
+        saveBtn.classList.remove('hidden');
+        lockMsg.classList.add('hidden');
+        lockBadge.textContent = 'Editable por Admin';
+        lockBadge.className = 'text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-emerald-500/20 text-emerald-300';
+      } else {
+        inputs.forEach(i => { i.disabled = true; i.classList.add('opacity-60', 'cursor-not-allowed'); });
+        saveBtn.classList.add('hidden');
+        lockMsg.classList.remove('hidden');
+        lockBadge.textContent = 'Solo Lectura';
+        lockBadge.className = 'text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-amber-500/20 text-amber-300';
+      }
+    }
+
+    /* 7. REDIRECCIÓN Y CONFIGURACIÓN DE URLS DE REDES SOCIALES */
+    function applySocialLinksToDOM() {
+      document.querySelectorAll('[data-social="whatsapp"]').forEach(el => el.href = socialUrls.whatsapp);
+      document.querySelectorAll('[data-social="tiktok"]').forEach(el => el.href = socialUrls.tiktok);
+      document.querySelectorAll('[data-social="instagram"]').forEach(el => el.href = socialUrls.instagram);
+      document.querySelectorAll('[data-social="facebook"]').forEach(el => el.href = socialUrls.facebook);
+
+      const waInput = document.getElementById('cfg-whatsapp');
+      if (waInput) {
+        waInput.value = socialUrls.whatsapp;
+        document.getElementById('cfg-tiktok').value = socialUrls.tiktok;
+        document.getElementById('cfg-instagram').value = socialUrls.instagram;
+        document.getElementById('cfg-facebook').value = socialUrls.facebook;
+      }
+    }
+
+    function saveSocialConfig(e) {
+      e.preventDefault();
+      if (!activeUser || !activeUser.canEditSocials) {
+        showToast('Solo el Administrador Maestro puede modificar las URLs de redes.', 'error');
+        return;
+      }
+
+      socialUrls.whatsapp = document.getElementById('cfg-whatsapp').value.trim();
+      socialUrls.tiktok = document.getElementById('cfg-tiktok').value.trim();
+      socialUrls.instagram = document.getElementById('cfg-instagram').value.trim();
+      socialUrls.facebook = document.getElementById('cfg-facebook').value.trim();
+
+      try {
+        localStorage.setItem('copa_v2_socials', JSON.stringify(socialUrls));
+      } catch (err) {}
+
+      applySocialLinksToDOM();
+      showToast('¡URLs de WhatsApp, TikTok, Instagram y Facebook actualizadas!');
+    }
+
+    /* 8. GESTIÓN DE GALERÍA E IMÁGENES DE COPACABANA (CREAR, EDITAR, FILTRAR, BORRAR) */
+    function setCategoryFilter(category) {
+      currentCategory = category;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        if (btn.dataset.cat === category) {
+          btn.className = 'cat-btn px-4 py-2 rounded-full text-xs font-bold bg-titicaca-deep text-white shadow-sm transition';
+        } else {
+          btn.className = 'cat-btn px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-700 hover:bg-slate-200 border border-slate-200 transition';
+        }
+      });
+      renderAttractionsGrid();
+    }
+
+    function handleSearchInput(query) {
+      currentSearchQuery = query.trim().toLowerCase();
+      renderAttractionsGrid();
+    }
+
+    function renderAttractionsGrid() {
+      const grid = document.getElementById('attractions-grid');
+      const filtered = attractionsList.filter(item => {
+        const matchesCat = currentCategory === 'todos' || item.category === currentCategory;
+        const matchesQuery = !currentSearchQuery || 
+          item.title.toLowerCase().includes(currentSearchQuery) || 
+          item.desc.toLowerCase().includes(currentSearchQuery) ||
+          item.location.toLowerCase().includes(currentSearchQuery);
+        return matchesCat && matchesQuery;
+      });
+
+      const statEl = document.getElementById('stat-total-photos');
+      if (statEl) statEl.textContent = attractionsList.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-16 text-center bg-white rounded-3xl border border-slate-200 p-8">
+            <i class="fa-regular fa-images text-4xl text-slate-300 mb-3 block"></i>
+            <h4 class="font-bold text-slate-700 text-base">No se encontraron atractivos con ese filtro</h4>
+            <p class="text-xs text-slate-500 mt-1">Prueba seleccionando otra categoría o limpiando el buscador.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+        const canEdit = Boolean(activeUser);
+        const canDelete = activeUser && (activeUser.canDeleteAny || item.author === activeUser.name);
+
+        return `
+          <article class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-slate-200/80 transition-all duration-300 flex flex-col card-zoom">
+            <div class="relative h-60 overflow-hidden cursor-pointer" onclick="openDetailModal(${item.id})">
+              <img src="${item.url}" alt="${item.title}" 
+                   class="w-full h-full object-cover transition-transform duration-500"
+                   onerror="this.src='https://placehold.co/800x600/0c4a6e/fbbf24?text=Copacabana'">
+              <span class="absolute top-3.5 left-3.5 bg-titicaca-deep/85 backdrop-blur-md text-gold-400 text-[11px] font-bold px-3 py-1 rounded-full">
+                ${item.category}
+              </span>
+              <button class="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-black/60 text-white text-xs flex items-center justify-center hover:bg-black" title="Ampliar imagen">
+                <i class="fa-solid fa-expand"></i>
+              </button>
+            </div>
+
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 class="text-lg font-bold font-serif text-slate-900 mb-2 leading-snug">${item.title}</h3>
+                <p class="text-xs text-slate-600 leading-relaxed line-clamp-3">${item.desc}</p>
+              </div>
+
+              <div class="mt-5 pt-4 border-t border-slate-100 space-y-3">
+                <div class="flex items-center justify-between text-[11px] text-slate-500">
+                  <span class="truncate pr-2"><i class="fa-solid fa-location-dot text-red-500 mr-1"></i> ${item.location}</span>
+                  <button onclick="openDetailModal(${item.id})" class="font-bold text-sky-700 hover:underline shrink-0">Ver más</button>
+                </div>
+
+                ${canEdit ? `
+                  <div class="flex items-center justify-between pt-2 border-t border-slate-100 gap-2">
+                    <span class="text-[10px] text-slate-400 truncate">Por: ${item.author}</span>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                      <button onclick="openAttractionModal(${item.id})" class="px-2.5 py-1 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 font-bold text-xs flex items-center gap-1 transition">
+                        <i class="fa-solid fa-pen-to-square"></i> Editar
+                      </button>
+                      ${canDelete ? `
+                        <button onclick="deleteAttraction(${item.id})" class="px-2.5 py-1 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 font-bold text-xs flex items-center gap-1 transition">
+                          <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                      ` : ''}
+                    </div>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    /* 9. MODAL DE CREACIÓN Y EDICIÓN DE IMÁGENES */
+    function openAttractionModal(editId = null) {
+      if (!activeUser) {
+        openLoginModal();
+        return;
+      }
+
+      const form = document.getElementById('attraction-form');
+      form.reset();
+
+      if (editId) {
+        const target = attractionsList.find(a => a.id === editId);
+        if (!target) return;
+        document.getElementById('modal-form-title').textContent = 'Modificar Atractivo / Imagen';
+        document.getElementById('edit-item-id').value = target.id;
+        document.getElementById('item-title').value = target.title;
+        document.getElementById('item-category').value = target.category;
+        document.getElementById('item-url').value = target.url;
+        document.getElementById('item-location').value = target.location;
+        document.getElementById('item-desc').value = target.desc;
+      } else {
+        document.getElementById('modal-form-title').textContent = 'Subir Nueva Imagen de Copacabana';
+        document.getElementById('edit-item-id').value = '';
+      }
+
+      document.getElementById('attraction-modal').classList.remove('hidden');
+    }
+
+    function closeAttractionModal() {
+      document.getElementById('attraction-modal').classList.add('hidden');
+    }
+
+    function saveAttractionForm(e) {
+      e.preventDefault();
+      if (!activeUser) return;
+
+      const editId = document.getElementById('edit-item-id').value;
+      const title = document.getElementById('item-title').value.trim();
+      const category = document.getElementById('item-category').value;
+      const url = document.getElementById('item-url').value.trim();
+      const location = document.getElementById('item-location').value.trim();
+      const desc = document.getElementById('item-desc').value.trim();
+
+      if (editId) {
+        const idx = attractionsList.findIndex(a => a.id === Number(editId));
+        if (idx !== -1) {
+          attractionsList[idx] = {
+            ...attractionsList[idx],
+            title,
+            category,
+            url,
+            location,
+            desc
+          };
+          showToast('¡Atractivo actualizado correctamente!');
+        }
+      } else {
+        attractionsList.unshift({
+          id: Date.now(),
+          title,
+          category,
+          url,
+          location,
+          desc,
+          author: activeUser.name
+        });
+        showToast('¡Nueva fotografía añadida a la galería de Copacabana!');
+      }
+
+      try {
+        localStorage.setItem('copa_v2_attractions', JSON.stringify(attractionsList));
+      } catch (err) {}
+
+      closeAttractionModal();
+      renderAttractionsGrid();
+    }
+
+    function deleteAttraction(id) {
+      if (!activeUser) return;
+      attractionsList = attractionsList.filter(a => a.id !== id);
+      try {
+        localStorage.setItem('copa_v2_attractions', JSON.stringify(attractionsList));
+      } catch (err) {}
+      renderAttractionsGrid();
+      showToast('Imagen eliminada de la galería.', 'warning');
+    }
+
+    function insertRandomSamplePhoto() {
+      const samples = [
+        'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80'
+      ];
+      document.getElementById('item-url').value = samples[Math.floor(Math.random() * samples.length)];
+    }
+
+    /* 10. VISOR DE DETALLE (LIGHTBOX) Y RESTAURACIÓN */
+    function openDetailModal(id) {
+      const item = attractionsList.find(a => a.id === id);
+      if (!item) return;
+
+      document.getElementById('detail-img').src = item.url;
+      document.getElementById('detail-cat').textContent = item.category;
+      document.getElementById('detail-title').textContent = item.title;
+      document.getElementById('detail-desc').textContent = item.desc;
+      document.getElementById('detail-location').textContent = item.location;
+      document.getElementById('detail-author').textContent = `Publicado por: ${item.author}`;
+
+      document.getElementById('detail-modal').classList.remove('hidden');
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detail-modal').classList.add('hidden');
+    }
+
+    function resetDefaultData() {
+      socialUrls = { ...DEFAULT_SOCIALS };
+      attractionsList = [...DEFAULT_ATTRACTIONS];
+      try {
+        localStorage.removeItem('copa_v2_socials');
+        localStorage.removeItem('copa_v2_attractions');
+      } catch (err) {}
+      applySocialLinksToDOM();
+      renderAttractionsGrid();
+      showToast('Datos originales de demostración restaurados.');
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>
