@@ -1,36 +1,50 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Turismo Copacabana - Portal Oficial</title>
+  <title>Turismo Copacabana - Santuario del Lago Titicaca</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     .hero-bg {
-      background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.8)),
-                  url('https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1600&q=80');
+      background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.85)),
+                  url('https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1800&q=80');
       background-size: cover;
       background-position: center;
+      background-attachment: fixed;
+    }
+    .card-zoom:hover img {
+      transform: scale(1.06);
     }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
 
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
-    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-2 text-xl font-black text-sky-900">
-        <i class="fa-solid fa-water text-sky-600"></i>
-        <span>Copacabana<span class="text-amber-500 font-semibold text-xs block -mt-1">Lago Titicaca · Bolivia</span></span>
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5 text-xl font-black text-sky-900">
+        <i class="fa-solid fa-water text-sky-600 text-2xl"></i>
+        <div>
+          <span>Copacabana</span>
+          <span class="text-amber-500 font-bold text-[11px] block -mt-1 uppercase tracking-wider">Lago Titicaca · Bolivia</span>
+        </div>
       </a>
 
+      <nav class="hidden md:flex items-center gap-6 text-xs font-bold text-slate-600 uppercase tracking-wider">
+        <a href="#atractivos" class="hover:text-sky-700 transition">Atractivos</a>
+        <a href="#guia-viaje" class="hover:text-sky-700 transition">Guía de Viaje</a>
+        <a href="#gastronomia" class="hover:text-sky-700 transition">Gastronomía</a>
+        <a href="#redes" class="hover:text-sky-700 transition">Contacto</a>
+      </nav>
+
       <div class="flex items-center gap-3">
-        <nav class="flex items-center gap-1 border-r border-slate-200 pr-3">
+        <div class="flex items-center gap-1 border-r border-slate-200 pr-3">
           <a id="hdr-wa" href="#" target="_blank" class="p-2 rounded-full text-emerald-600 hover:bg-emerald-50 transition" title="WhatsApp"><i class="fa-brands fa-whatsapp text-lg"></i></a>
           <a id="hdr-tk" href="#" target="_blank" class="p-2 rounded-full text-slate-800 hover:bg-slate-100 transition" title="TikTok"><i class="fa-brands fa-tiktok text-lg"></i></a>
           <a id="hdr-ig" href="#" target="_blank" class="p-2 rounded-full text-pink-600 hover:bg-pink-50 transition" title="Instagram"><i class="fa-brands fa-instagram text-lg"></i></a>
           <a id="hdr-fb" href="#" target="_blank" class="p-2 rounded-full text-blue-600 hover:bg-blue-50 transition" title="Facebook"><i class="fa-brands fa-facebook text-lg"></i></a>
-        </nav>
+        </div>
 
         <div id="auth-area" class="flex items-center gap-2">
           <button onclick="openLoginModal()" class="p-2 text-slate-400 hover:text-sky-700 transition" title="Acceso">
@@ -41,48 +55,50 @@
     </div>
   </header>
 
-  <section class="hero-bg text-white py-20 px-4 text-center">
-    <div class="max-w-3xl mx-auto space-y-4">
-      <span class="inline-block px-3 py-1 bg-amber-500 text-slate-950 font-bold text-xs uppercase rounded-full">Destino Imperdible</span>
-      <h1 class="text-4xl md:text-5xl font-black tracking-tight">Vive la Magia de Copacabana</h1>
-      <p class="text-slate-200 text-base md:text-lg">Cultura ancestral, paseos a la Isla del Sol, miradores sagrados y la mejor gastronomía a orillas del Lago Titicaca.</p>
+  <section class="hero-bg text-white py-28 px-4 text-center relative">
+    <div class="max-w-4xl mx-auto space-y-5">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-500 text-slate-950 font-black text-xs uppercase rounded-full shadow">
+        <i class="fa-solid fa-sun"></i> 3.841 m s. n. m. · Cuna de la Civilización Andina
+      </div>
+      <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight">Descubre la Magia de Copacabana y el Lago Sagrado</h1>
+      <p class="text-slate-200 text-base md:text-xl max-w-2xl mx-auto">Navega hacia la mítica Isla del Sol, recorre el Santuario de la Virgen Morena, sube al Calvario y vive atardeceres inolvidables en el lago navegable más alto del mundo.</p>
       
       <div class="pt-4 flex flex-wrap justify-center gap-3">
-        <a id="hero-wa" href="#" target="_blank" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-full flex items-center gap-2 shadow-lg transition">
-          <i class="fa-brands fa-whatsapp text-base"></i> Reservas por WhatsApp
+        <a id="hero-wa" href="#" target="_blank" class="px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-full flex items-center gap-2 shadow-lg transition">
+          <i class="fa-brands fa-whatsapp text-base"></i> Consultar Tours por WhatsApp
         </a>
-        <a id="hero-tk" href="#" target="_blank" class="px-4 py-2.5 bg-slate-900/90 hover:bg-black text-white text-xs font-bold rounded-full flex items-center gap-2 border border-slate-700 transition">
-          <i class="fa-brands fa-tiktok text-base"></i> Videos en TikTok
+        <a id="hero-tk" href="#" target="_blank" class="px-5 py-3 bg-slate-900/90 hover:bg-black text-white text-xs font-bold rounded-full flex items-center gap-2 border border-slate-700 transition">
+          <i class="fa-brands fa-tiktok text-base"></i> Ver Videos en TikTok
         </a>
-        <a id="hero-ig" href="#" target="_blank" class="px-4 py-2.5 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-full flex items-center gap-2 transition">
-          <i class="fa-brands fa-instagram text-base"></i> Fotos en Instagram
+        <a id="hero-ig" href="#" target="_blank" class="px-5 py-3 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-full flex items-center gap-2 transition">
+          <i class="fa-brands fa-instagram text-base"></i> Galería en Instagram
         </a>
-        <a id="hero-fb" href="#" target="_blank" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-full flex items-center gap-2 transition">
-          <i class="fa-brands fa-facebook text-base"></i> Página de Facebook
+        <a id="hero-fb" href="#" target="_blank" class="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-full flex items-center gap-2 transition">
+          <i class="fa-brands fa-facebook text-base"></i> Comunidad en Facebook
         </a>
       </div>
     </div>
   </section>
 
-  <section id="dashboard-panel" class="hidden max-w-6xl mx-auto px-4 mt-8 w-full">
-    <div class="bg-white border-2 border-sky-600 rounded-2xl p-6 shadow-md">
+  <section id="dashboard-panel" class="hidden max-w-7xl mx-auto px-4 mt-8 w-full">
+    <div class="bg-white border-2 border-sky-600 rounded-2xl p-6 shadow-xl">
       <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-4 mb-6">
         <div>
           <span id="user-role-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-slate-950">Rol</span>
-          <h2 class="text-lg font-black text-slate-900 mt-1" id="welcome-user">Panel de Gestión</h2>
+          <h2 class="text-lg font-black text-slate-900 mt-1" id="welcome-user">Panel de Control</h2>
         </div>
         <button onclick="logout()" class="px-3 py-1.5 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg text-xs font-bold transition">
           <i class="fa-solid fa-right-from-bracket mr-1"></i> Cerrar Sesión
         </button>
       </div>
 
-      <div id="admin-social-box" class="mb-8 bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div id="admin-social-box" class="mb-8 bg-slate-50 p-5 rounded-xl border border-slate-200">
         <div class="flex items-center justify-between mb-3">
           <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-            <i class="fa-solid fa-share-nodes text-sky-600"></i> Configuración de URLs de Redes Sociales
+            <i class="fa-solid fa-share-nodes text-sky-600"></i> Configuración de URLs de Redes Sociales (Exclusivo Administrador)
           </h3>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-semibold text-slate-600 mb-1"><i class="fa-brands fa-whatsapp text-emerald-600"></i> URL de WhatsApp:</label>
             <input type="url" id="in-wa" class="w-full text-xs p-2.5 border rounded-lg bg-white">
@@ -100,26 +116,32 @@
             <input type="url" id="in-fb" class="w-full text-xs p-2.5 border rounded-lg bg-white">
           </div>
         </div>
-        <button id="btn-save-social" onclick="saveSocials()" class="mt-3 px-4 py-2 bg-sky-700 hover:bg-sky-800 text-white text-xs font-bold rounded-lg transition">
-          Guardar URLs de Redes
+        <button id="btn-save-social" onclick="saveSocials()" class="mt-4 px-5 py-2.5 bg-sky-700 hover:bg-sky-800 text-white text-xs font-bold rounded-lg transition">
+          <i class="fa-solid fa-floppy-disk mr-1"></i> Guardar Enlaces Oficiales
         </button>
       </div>
 
-      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+      <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
         <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-2">
-          <i class="fa-solid fa-image text-emerald-600"></i> <span id="form-img-title">Subir Nueva Imagen de Copacabana</span>
+          <i class="fa-solid fa-camera-retro text-emerald-600"></i> <span id="form-img-title">Añadir o Modificar Atractivo Turístico</span>
         </h3>
         <input type="hidden" id="edit-img-id" value="">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <input type="text" id="in-title" placeholder="Título del lugar (ej: Isla del Sol)" class="text-xs p-2.5 border rounded-lg bg-white">
-          <input type="url" id="in-url" placeholder="Enlace de la foto (https://...)" class="text-xs p-2.5 border rounded-lg bg-white">
-          <input type="text" id="in-desc" placeholder="Descripción turística" class="text-xs p-2.5 border rounded-lg bg-white">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+          <input type="text" id="in-title" placeholder="Nombre del lugar (ej: Horca del Inca)" class="text-xs p-2.5 border rounded-lg bg-white">
+          <select id="in-cat" class="text-xs p-2.5 border rounded-lg bg-white">
+            <option value="Santuarios e Historia">Santuarios e Historia</option>
+            <option value="Islas y Naturaleza">Islas y Naturaleza</option>
+            <option value="Miradores y Trekking">Miradores y Trekking</option>
+            <option value="Cultura y Playas">Cultura y Playas</option>
+          </select>
+          <input type="url" id="in-url" placeholder="URL de la foto (https://...)" class="text-xs p-2.5 border rounded-lg bg-white">
+          <input type="text" id="in-desc" placeholder="Descripción detallada del atractivo" class="text-xs p-2.5 border rounded-lg bg-white">
         </div>
-        <div class="mt-3 flex gap-2">
-          <button onclick="saveImageItem()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition">
-            <i class="fa-solid fa-check mr-1"></i> Guardar en la Galería
+        <div class="mt-4 flex gap-2">
+          <button onclick="saveImageItem()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition">
+            <i class="fa-solid fa-check mr-1"></i> Guardar en el Catálogo
           </button>
-          <button id="btn-cancel-edit" onclick="resetImgForm()" class="hidden px-4 py-2 bg-slate-300 hover:bg-slate-400 text-slate-800 text-xs font-bold rounded-lg transition">
+          <button id="btn-cancel-edit" onclick="resetImgForm()" class="hidden px-4 py-2.5 bg-slate-300 hover:bg-slate-400 text-slate-800 text-xs font-bold rounded-lg transition">
             Cancelar Edición
           </button>
         </div>
@@ -127,14 +149,128 @@
     </div>
   </section>
 
-  <main class="max-w-6xl mx-auto px-4 py-12 flex-1 w-full">
-    <div class="text-center max-w-xl mx-auto mb-10">
-      <h2 class="text-2xl md:text-3xl font-black text-slate-900">Galería y Atractivos</h2>
-      <p class="text-sm text-slate-500 mt-1">Conoce los rincones más emblemáticos del municipio de Copacabana.</p>
+  <main id="atractivos" class="max-w-7xl mx-auto px-4 py-16 w-full">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+      <div>
+        <span class="text-xs font-extrabold uppercase tracking-widest text-sky-700">Explora el Destino</span>
+        <h2 class="text-3xl font-black text-slate-900 mt-1">Galería y Atractivos Imperdibles</h2>
+      </div>
+      <div class="flex flex-wrap gap-2" id="category-filters">
+        <button onclick="filterCategory('Todos')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-sky-700 text-white transition">Todos</button>
+        <button onclick="filterCategory('Santuarios e Historia')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 transition">Santuarios e Historia</button>
+        <button onclick="filterCategory('Islas y Naturaleza')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 transition">Islas y Naturaleza</button>
+        <button onclick="filterCategory('Miradores y Trekking')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 transition">Miradores y Trekking</button>
+        <button onclick="filterCategory('Cultura y Playas')" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 transition">Cultura y Playas</button>
+      </div>
     </div>
 
-    <div id="gallery-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <div id="gallery-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7"></div>
   </main>
+
+  <section id="guia-viaje" class="bg-sky-950 text-white py-16 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-amber-400 text-xs font-bold uppercase tracking-widest">Planifica tu Ruta</span>
+        <h2 class="text-3xl font-black mt-1">Consejos Prácticos para el Viajero</h2>
+        <p class="text-sky-200 text-sm mt-2">Todo lo que necesitas saber para llegar desde La Paz o El Alto y disfrutar tu estadía en el Lago Titicaca.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-sky-900/60 border border-sky-800 p-6 rounded-2xl">
+          <div class="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-lg mb-4">
+            <i class="fa-solid fa-bus"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2">Transporte desde La Paz y El Alto</h3>
+          <p class="text-xs text-sky-200 leading-relaxed">Salidas diarias desde la Terminal de Buses de La Paz, la zona del Cementerio General y la Terminal Interprovincial de El Alto (Río Seco). El viaje bordea la Cordillera Real y dura aproximadamente 3 horas y media.</p>
+        </div>
+
+        <div class="bg-sky-900/60 border border-sky-800 p-6 rounded-2xl">
+          <div class="w-10 h-10 rounded-xl bg-sky-400 text-slate-950 flex items-center justify-center font-black text-lg mb-4">
+            <i class="fa-solid fa-ferry"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2">El Cruce del Estrecho de Tiquina</h3>
+          <p class="text-xs text-sky-200 leading-relaxed">A mitad de camino cruzarás el estrecho de Tiquina (San Pablo a San Pedro). Los pasajeros descienden del bus para cruzar en lanchas rápidas con vistas espectaculares mientras el vehículo cruza en pontón.</p>
+        </div>
+
+        <div class="bg-sky-900/60 border border-sky-800 p-6 rounded-2xl">
+          <div class="w-10 h-10 rounded-xl bg-emerald-400 text-slate-950 flex items-center justify-center font-black text-lg mb-4">
+            <i class="fa-solid fa-mountain-sun"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2">Clima, Altura y Recomendaciones</h3>
+          <p class="text-xs text-sky-200 leading-relaxed">Copacabana está a 3.841 m s. n. m. Durante el día el sol altiplánico es radiante (usa protector solar, gafas y sombrero), y por la noche desciende la temperatura, por lo que se recomienda ropa abrigada.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gastronomia" class="max-w-7xl mx-auto px-4 py-16 w-full">
+    <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm grid grid-cols-1 lg:grid-cols-2">
+      <div class="p-8 md:p-12 flex flex-col justify-center space-y-4">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-amber-600">Sabores del Lago Sagrado</span>
+        <h2 class="text-3xl font-black text-slate-900">La Tradicional Trucha del Titicaca</h2>
+        <p class="text-sm text-slate-600 leading-relaxed">Visitar la bahía de Copacabana es sinónimo de degustar su famosa trucha rosada recién pescada, preparada a la mantequilla, al ajillo, a la diabla o a la parrilla en las pintorescas casetas frente a la playa, acompañada de papas nativas, choclo y arroz.</p>
+        <ul class="text-xs text-slate-700 space-y-2 pt-2">
+          <li class="flex items-center gap-2"><i class="fa-solid fa-utensils text-amber-500"></i> <strong>Trucha a la Mantequilla y al Limón:</strong> El plato estrella de la costanera.</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-bowl-food text-amber-500"></i> <strong>Wallaqi e Ispis Fritos:</strong> Tradición culinaria aymara del lago.</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-mug-hot text-amber-500"></i> <strong>Pasankallas Gigantes:</strong> El infaltable rosetón dulce típico de Copacabana para llevar a casa.</li>
+        </ul>
+      </div>
+      <div class="h-72 lg:h-auto">
+        <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=1000&q=80" alt="Gastronomía de Copacabana" class="w-full h-full object-cover">
+      </div>
+    </div>
+  </section>
+
+  <section id="redes" class="bg-slate-900 text-white py-14 px-4">
+    <div class="max-w-5xl mx-auto text-center space-y-6">
+      <h2 class="text-2xl md:text-3xl font-black">Conéctate con Nuestras Redes Oficiales</h2>
+      <p class="text-slate-400 text-sm max-w-xl mx-auto">Haz clic en cualquiera de nuestros canales para recibir atención directa, ver videos de viajes, paquetes a la Isla del Sol y promociones vigentes.</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+        <a id="card-wa" href="#" target="_blank" class="p-5 rounded-2xl bg-slate-800 hover:bg-emerald-600 transition flex flex-col items-center gap-2 border border-slate-700">
+          <i class="fa-brands fa-whatsapp text-3xl text-emerald-400"></i>
+          <span class="font-bold text-sm">WhatsApp</span>
+          <span class="text-[11px] text-slate-300">Chat directo</span>
+        </a>
+        <a id="card-tk" href="#" target="_blank" class="p-5 rounded-2xl bg-slate-800 hover:bg-black transition flex flex-col items-center gap-2 border border-slate-700">
+          <i class="fa-brands fa-tiktok text-3xl text-white"></i>
+          <span class="font-bold text-sm">TikTok</span>
+          <span class="text-[11px] text-slate-300">Videos y reels</span>
+        </a>
+        <a id="card-ig" href="#" target="_blank" class="p-5 rounded-2xl bg-slate-800 hover:bg-pink-600 transition flex flex-col items-center gap-2 border border-slate-700">
+          <i class="fa-brands fa-instagram text-3xl text-pink-400"></i>
+          <span class="font-bold text-sm">Instagram</span>
+          <span class="text-[11px] text-slate-300">Fotos y stories</span>
+        </a>
+        <a id="card-fb" href="#" target="_blank" class="p-5 rounded-2xl bg-slate-800 hover:bg-blue-600 transition flex flex-col items-center gap-2 border border-slate-700">
+          <i class="fa-brands fa-facebook text-3xl text-blue-400"></i>
+          <span class="font-bold text-sm">Facebook</span>
+          <span class="text-[11px] text-slate-300">Eventos y guías</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="fixed bottom-5 right-5 z-40 flex flex-col gap-2.5">
+    <a id="flt-wa" href="#" target="_blank" class="w-12 h-12 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg flex items-center justify-center text-2xl transition transform hover:scale-110" title="Chatear por WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <div id="lightbox-modal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4" onclick="closeLightbox()">
+    <div class="max-w-3xl w-full bg-white rounded-2xl overflow-hidden shadow-2xl" onclick="event.stopPropagation()">
+      <div class="relative">
+        <img id="lb-img" src="" alt="" class="w-full max-h-[65vh] object-cover">
+        <button onclick="closeLightbox()" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-slate-900/70 text-white flex items-center justify-center hover:bg-slate-900">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <span id="lb-cat" class="absolute bottom-3 left-3 px-3 py-1 rounded-full text-xs font-bold bg-amber-500 text-slate-950"></span>
+      </div>
+      <div class="p-6">
+        <h3 id="lb-title" class="text-xl font-black text-slate-900"></h3>
+        <p id="lb-desc" class="text-sm text-slate-600 mt-2 leading-relaxed"></p>
+      </div>
+    </div>
+  </div>
 
   <div id="login-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200">
@@ -160,9 +296,9 @@
     </div>
   </div>
 
-  <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 text-xs mt-auto">
-    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p>&copy; 2026 Turismo Copacabana · Bolivia.</p>
+  <footer class="bg-slate-950 text-slate-400 py-8 border-t border-slate-800 text-xs mt-auto">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>&copy; 2026 Portal Turístico de Copacabana · Lago Titicaca, Bolivia.</p>
       <div class="flex gap-4 text-base">
         <a id="ft-wa" href="#" target="_blank" class="hover:text-emerald-400"><i class="fa-brands fa-whatsapp"></i></a>
         <a id="ft-tk" href="#" target="_blank" class="hover:text-white"><i class="fa-brands fa-tiktok"></i></a>
@@ -180,43 +316,69 @@
     };
 
     let activeUser = null;
+    let selectedCategory = 'Todos';
 
-    let socials = JSON.parse(localStorage.getItem('copa_socials_v2')) || {
+    let socials = JSON.parse(localStorage.getItem('copa_socials_v3')) || {
       wa: 'https://wa.me/59170000000?text=Hola,%20quiero%20informaci%C3%B3n%20tur%C3%ADstica%20de%20Copacabana',
       tk: 'https://www.tiktok.com/@visitbolivia',
       ig: 'https://www.instagram.com/explore/tags/copacabanabolivia/',
       fb: 'https://www.facebook.com/search/top?q=copacabana%20bolivia'
     };
 
-    let gallery = JSON.parse(localStorage.getItem('copa_gallery_v2')) || [
+    let gallery = JSON.parse(localStorage.getItem('copa_gallery_v3')) || [
       {
         id: 1,
         title: 'Basílica de Nuestra Señora de Copacabana',
-        desc: 'Majestuoso santuario colonial del siglo XVI y centro de peregrinación junto al Lago Titicaca.',
-        url: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80'
+        cat: 'Santuarios e Historia',
+        desc: 'Majestuoso templo blanco de estilo renacentista y morisco construido en el siglo XVI, hogar de la venerada Virgen de la Candelaria de Copacabana y corazón espiritual de la península.',
+        url: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80'
       },
       {
         id: 2,
-        title: 'Cerro El Calvario',
-        desc: 'Ascenso tradicional con vistas panorámicas inigualables del atardecer sobre el lago sagrado.',
-        url: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=800&q=80'
+        title: 'Isla del Sol (Pilkokaina y Yumani)',
+        cat: 'Islas y Naturaleza',
+        desc: 'La isla más grande del Lago Titicaca, conectada por lanchas desde el puerto de Copacabana. Destaca por sus escalinatas incaicas de Yumani, la Fuente de la Eterna Juventud y el laberinto de la Chinkana.',
+        url: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=900&q=80'
       },
       {
         id: 3,
-        title: 'Isla del Sol y Bahía',
-        desc: 'Embarcaciones hacia las ruinas arqueológicas de Pilkokaina, Yumani y la Chinkana.',
-        url: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=800&q=80'
+        title: 'Cerro El Calvario',
+        cat: 'Miradores y Trekking',
+        desc: 'Sendero de peregrinación con las 14 estaciones del Vía Crucis que conduce a la cima, desde donde se aprecia el mejor atardecer panorámico sobre la bahía y el Lago Titicaca.',
+        url: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=900&q=80'
+      },
+      {
+        id: 4,
+        title: 'Observatorio Astronómico Horca del Inca',
+        cat: 'Santuarios e Historia',
+        desc: 'Complejo arqueológico preincaico de la cultura Chiripa ubicado en el cerro Kesanani, empleado antiguamente para registrar los solsticios y equinoccios andinos.',
+        url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80'
+      },
+      {
+        id: 5,
+        title: 'Pueblo de Piedra de Sampaya e Isla de la Luna',
+        cat: 'Islas y Naturaleza',
+        desc: 'Comunidad ancestral con arquitectura intacta en piedra laja y vistas directas hacia la Isla de la Luna (Koati), donde residían las Vírgenes del Sol en el Palacio de Iñak Uyu.',
+        url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80'
+      },
+      {
+        id: 6,
+        title: 'Bahía de Copacabana y Bendición de Movilidades',
+        cat: 'Cultura y Playas',
+        desc: 'Paseo costero con botes de pedal, lanchas turísticas y la famosa tradición de la ch’alla y bendición de vehículos frente al atrio de la Basílica.',
+        url: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=80'
       }
     ];
 
     function applySocialLinks() {
-      const prefixes = ['hdr', 'hero', 'ft'];
+      const prefixes = ['hdr', 'hero', 'ft', 'card'];
       prefixes.forEach(p => {
         document.getElementById(`${p}-wa`).href = socials.wa;
         document.getElementById(`${p}-tk`).href = socials.tk;
         document.getElementById(`${p}-ig`).href = socials.ig;
         document.getElementById(`${p}-fb`).href = socials.fb;
       });
+      document.getElementById('flt-wa').href = socials.wa;
       document.getElementById('in-wa').value = socials.wa;
       document.getElementById('in-tk').value = socials.tk;
       document.getElementById('in-ig').value = socials.ig;
@@ -226,4 +388,210 @@
     function saveSocials() {
       if (!activeUser || activeUser.role !== 'admin') return;
       socials.wa = document.getElementById('in-wa').value.trim();
-      socials.tk = document.getElementById('in-tk').value.trim
+      socials.tk = document.getElementById('in-tk').value.trim();
+      socials.ig = document.getElementById('in-ig').value.trim();
+      socials.fb = document.getElementById('in-fb').value.trim();
+      localStorage.setItem('copa_socials_v3', JSON.stringify(socials));
+      applySocialLinks();
+      alert('URLs actualizadas correctamente.');
+    }
+
+    function filterCategory(cat) {
+      selectedCategory = cat;
+      const buttons = document.querySelectorAll('.cat-btn');
+      buttons.forEach(btn => {
+        if (btn.innerText === cat) {
+          btn.className = 'cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-sky-700 text-white transition';
+        } else {
+          btn.className = 'cat-btn px-3.5 py-1.5 rounded-full text-xs font-bold bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 transition';
+        }
+      });
+      renderGallery();
+    }
+
+    function renderGallery() {
+      const grid = document.getElementById('gallery-container');
+      grid.innerHTML = '';
+
+      const filtered = selectedCategory === 'Todos'
+        ? gallery
+        : gallery.filter(item => item.cat === selectedCategory);
+
+      filtered.forEach(item => {
+        const canEdit = activeUser !== null;
+        const canDelete = activeUser && activeUser.role === 'admin';
+
+        const card = document.createElement('div');
+        card.className = 'card-zoom bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition flex flex-col';
+        card.innerHTML = `
+          <div class="relative h-56 overflow-hidden cursor-pointer" onclick="openLightbox(${item.id})">
+            <img src="${item.url}" alt="${item.title}" class="w-full h-full object-cover transition duration-500" onerror="this.src='https://placehold.co/600x400?text=Copacabana'">
+            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-900/80 text-amber-400 backdrop-blur-sm">${item.cat || 'Atractivo'}</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="font-bold text-slate-900 text-base cursor-pointer hover:text-sky-700" onclick="openLightbox(${item.id})">${item.title}</h3>
+              <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">${item.desc}</p>
+            </div>
+            ${canEdit ? `
+              <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-end gap-3">
+                <button onclick="loadImageToEdit(${item.id})" class="text-xs text-sky-700 hover:underline font-semibold">
+                  <i class="fa-solid fa-pen-to-square"></i> Modificar
+                </button>
+                ${canDelete ? `
+                  <button onclick="deleteImage(${item.id})" class="text-xs text-red-600 hover:underline font-semibold">
+                    <i class="fa-solid fa-trash"></i> Eliminar
+                  </button>
+                ` : ''}
+              </div>
+            ` : ''}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openLightbox(id) {
+      const item = gallery.find(x => x.id === id);
+      if (!item) return;
+      document.getElementById('lb-img').src = item.url;
+      document.getElementById('lb-title').innerText = item.title;
+      document.getElementById('lb-cat').innerText = item.cat || 'Copacabana';
+      document.getElementById('lb-desc').innerText = item.desc;
+      document.getElementById('lightbox-modal').classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox-modal').classList.add('hidden');
+    }
+
+    function saveImageItem() {
+      if (!activeUser) return;
+      const editId = document.getElementById('edit-img-id').value;
+      const title = document.getElementById('in-title').value.trim();
+      const cat = document.getElementById('in-cat').value;
+      const url = document.getElementById('in-url').value.trim();
+      const desc = document.getElementById('in-desc').value.trim();
+
+      if (!title || !url) {
+        alert('Completa al menos el título y el enlace de la imagen.');
+        return;
+      }
+
+      if (editId) {
+        const index = gallery.findIndex(x => x.id == editId);
+        if (index > -1) {
+          gallery[index] = { id: Number(editId), title, cat, url, desc };
+        }
+      } else {
+        gallery.push({ id: Date.now(), title, cat, url, desc: desc || 'Atractivo turístico de Copacabana.' });
+      }
+
+      localStorage.setItem('copa_gallery_v3', JSON.stringify(gallery));
+      resetImgForm();
+      renderGallery();
+    }
+
+    function loadImageToEdit(id) {
+      const item = gallery.find(x => x.id === id);
+      if (!item) return;
+      document.getElementById('edit-img-id').value = item.id;
+      document.getElementById('in-title').value = item.title;
+      document.getElementById('in-cat').value = item.cat || 'Santuarios e Historia';
+      document.getElementById('in-url').value = item.url;
+      document.getElementById('in-desc').value = item.desc;
+      document.getElementById('form-img-title').innerText = 'Modificando Atractivo: ' + item.title;
+      document.getElementById('btn-cancel-edit').classList.remove('hidden');
+      window.scrollTo({ top: document.getElementById('dashboard-panel').offsetTop - 80, behavior: 'smooth' });
+    }
+
+    function resetImgForm() {
+      document.getElementById('edit-img-id').value = '';
+      document.getElementById('in-title').value = '';
+      document.getElementById('in-url').value = '';
+      document.getElementById('in-desc').value = '';
+      document.getElementById('form-img-title').innerText = 'Añadir o Modificar Atractivo Turístico';
+      document.getElementById('btn-cancel-edit').classList.add('hidden');
+    }
+
+    function deleteImage(id) {
+      if (!activeUser || activeUser.role !== 'admin') return;
+      if (confirm('¿Eliminar esta imagen de la galería?')) {
+        gallery = gallery.filter(x => x.id !== id);
+        localStorage.setItem('copa_gallery_v3', JSON.stringify(gallery));
+        renderGallery();
+      }
+    }
+
+    function openLoginModal() {
+      document.getElementById('login-user').value = '';
+      document.getElementById('login-pass').value = '';
+      document.getElementById('login-error').classList.add('hidden');
+      document.getElementById('login-modal').classList.remove('hidden');
+    }
+
+    function closeLoginModal() {
+      document.getElementById('login-modal').classList.add('hidden');
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('login-user').value.trim();
+      const p = document.getElementById('login-pass').value;
+
+      if (USERS[u] && USERS[u].pass === p) {
+        activeUser = { username: u, ...USERS[u] };
+        closeLoginModal();
+        updateDashboardUI();
+        renderGallery();
+      } else {
+        document.getElementById('login-error').classList.remove('hidden');
+      }
+    }
+
+    function logout() {
+      activeUser = null;
+      resetImgForm();
+      updateDashboardUI();
+      renderGallery();
+    }
+
+    function updateDashboardUI() {
+      const panel = document.getElementById('dashboard-panel');
+      const authArea = document.getElementById('auth-area');
+      const socialBox = document.getElementById('admin-social-box');
+
+      if (!activeUser) {
+        panel.classList.add('hidden');
+        authArea.innerHTML = `
+          <button onclick="openLoginModal()" class="p-2 text-slate-400 hover:text-sky-700 transition" title="Acceso">
+            <i class="fa-solid fa-lock text-sm"></i>
+          </button>`;
+        return;
+      }
+
+      panel.classList.remove('hidden');
+      document.getElementById('welcome-user').innerText = 'Sesión iniciada: ' + activeUser.name;
+      const badge = document.getElementById('user-role-badge');
+
+      if (activeUser.role === 'admin') {
+        badge.innerText = 'Administrador';
+        badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-slate-950';
+        socialBox.classList.remove('hidden');
+      } else {
+        badge.innerText = 'Editor Autorizado';
+        badge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-600 text-white';
+        socialBox.classList.add('hidden');
+      }
+
+      authArea.innerHTML = `
+        <span class="text-xs font-bold text-slate-700 hidden md:inline"><i class="fa-solid fa-circle-user text-emerald-600 mr-1"></i>${activeUser.name}</span>
+        <button onclick="logout()" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold rounded-lg transition">Salir</button>
+      `;
+    }
+
+    applySocialLinks();
+    renderGallery();
+  </script>
+</body>
+</html>
